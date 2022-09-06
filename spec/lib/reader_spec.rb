@@ -1,4 +1,4 @@
-RSpec.describe CsvSorter do 
+RSpec.describe Reader do 
   describe 'CONSTANTS' do 
     describe 'COMMA_SEPARATOR' do 
       subject { described_class::COMMA_SEPARATOR }
@@ -8,18 +8,17 @@ RSpec.describe CsvSorter do
   end
 
   describe '#run' do 
-    subject { @csv_sorter.run }
+    subject { @reader.run }
 
     before do 
-      @args = {
+      @kargs = {
         column_separator: column_separator,
-        path: 'file-path',
-        sort_column: sort_column
+        path: 'file-path'
       }.compact
 
-      @csv_sorter = described_class.new(**@args)
+      @reader = described_class.new(**@kargs)
 
-      @csv_double = instance_double(CSV, read: unsorted_data)
+      @csv_double = instance_double(CSV, read: 'unsorted-data')
       allow(CSV).to receive(:new).and_return(@csv_double)
 
       allow(File).to receive(:read).and_return('data-string')
@@ -27,23 +26,16 @@ RSpec.describe CsvSorter do
       subject
     end
 
-    context 'when optional arguments are passed' do 
+    context 'when all arguments are passed' do 
       let(:column_separator) { '|' }
-      let(:sort_column) { 7 }
-      
-      let(:unsorted_data) do 
-        [
-          ['abc', '123', 'def'],
-          ['ghi', '789', 'xyx'],
-          ['jkl', '456', 'uvw']
-        ]
-      end
+
+      it { is_expected.to eq('unsorted-data') }
 
       it 'calls read on File with the correct argument' do 
         expect(File).to have_received(:read).with('file-path')
       end
 
-      it 'uses the passed arguments' do 
+      it 'calls CSV with the passed arguments' do 
         expect(CSV).to have_received(:new).with(
           'data-string', 
           col_sep: column_separator
@@ -51,23 +43,16 @@ RSpec.describe CsvSorter do
       end
     end
 
-    context 'when optional arguments are not passed' do 
+    context 'when only required arguments are passed' do 
       let(:column_separator) { nil }
-      let(:sort_column) { nil }
 
-      let(:unsorted_data) do 
-        [
-          ['abc', '123', 'def'],
-          ['ghi', '789', 'xyx'],
-          ['jkl', '456', 'uvw']
-        ]
-      end
+      it { is_expected.to eq('unsorted-data') }
 
       it 'calls read on File with the correct argument' do 
         expect(File).to have_received(:read).with('file-path')
       end
 
-      it 'uses the passed arguments' do 
+      it 'calls CSV the passed and default arguments' do 
         expect(CSV).to have_received(:new).with(
           'data-string', 
           col_sep: described_class::COMMA_SEPARATOR

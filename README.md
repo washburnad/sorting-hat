@@ -8,9 +8,10 @@ Enter the interactive console from the `sorting-hat` root directory
 
 ```ruby
 sorting-hat % bin/sort-cli.rb
-> s = CsvSorter.new(
+> s = SortingHat.new(
   path: '../path/to/csv.txt', 
-  sort_column: 2
+  sort_column: 2, # optional, defaults to 0
+  sort_order: 'desc' # optional, defaults to 'asc'
 )
 => [
   ['x', 'y', 1],
