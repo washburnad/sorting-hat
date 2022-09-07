@@ -9,10 +9,10 @@ git clone git@github.com:washburnad/sorting-hat.git
 cd sorting-hat
 ```
 
-Set outdoorsy.rb as an executable and run directly
+Set outdoorsy-cli.rb as an executable and run directly
 
 ```
-chmod +x bin/outdoorsy.rb
+chmod +x bin/outdoorsy-cli.rb
 
 bin/outdoorsy-cli.rb
 ```
@@ -22,6 +22,7 @@ Optionally, create an alias for it.
 # replace .zshrc with .bshrc or whichever shell config you're using
 echo "alias outdoorsy-cli=$PWD/bin/outdoorsy-cli.rb" >> ~/.zshrc
 . ~/.zshrc
+
 outdoorsy-cli
 ```
 
