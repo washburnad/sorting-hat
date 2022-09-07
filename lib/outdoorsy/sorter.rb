@@ -1,3 +1,6 @@
+require 'csv'
+require 'logger'
+
 # use specific class to read an Outdoor.sy user file
 # rows are either | or , delimited
 # rows contain exactly 6 fields corresponding to HEADERS
@@ -41,21 +44,20 @@ module Outdoorsy
     def initialize(path:)
       @path = path 
       @users = []
+      @logger = Logger.new(STDOUT)
 
       set_delimiter
       build_users
     end
 
-    def sort(sort_column:, sort_order:) 
-      @users.sort_by! { |user| user.send(sort_column.to_sym) }
+    def sort(sort_column: :full_name, sort_order: :asc) 
+      @users.sort_by! { |user| user.send(sort_column.to_sym).downcase }
 
-      if sort_order == 'desc'
+      if sort_order == :desc
         @users.reverse!
       end
-    end
 
-    def user_list
-      @users.map { |user| user.to_s(@delimiter) }.join("\n")
+      display_users
     end
 
     private 
@@ -64,8 +66,14 @@ module Outdoorsy
       csv.each do |row|
         @users << User.new(*row)
       end
+    end
 
-      # require 'pry'; binding.pry
+    def display_users
+      @users.each do |user|
+        @logger.info(user.to_s(@delimiter))
+      end
+
+      nil
     end
 
     def csv
