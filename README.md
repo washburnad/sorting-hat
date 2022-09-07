@@ -29,6 +29,7 @@ outdoorsy-cli
 ```ruby
 # build and run a new sorter
 outdoorsy_load 'spec/fixtures/pipes.txt'
+=> "Loaded spec/fixtures/pipes.txt successfully" 
 outdoorsy_sort # sorts by full_name ascending
 
 INFO -- : Ansel Adams|a@adams.com|motorboat|Rushing Water|24’
@@ -38,13 +39,21 @@ INFO -- : Steve Irwin|steve@crocodiles.com|RV|G’Day For Adventure|32 ft
 => nil
 
 outdoorsy_load'spec/fixtures/commas.txt'
-outdoorsy_sort :last_name, :desc
+=> "Loaded spec/fixtures/commas.txt successfully" 
+outdoorsy_sort :last_name, :desc # sorts by last_name descending
 
 INFO -- : Greta Thunberg,greta@future.com,sailboat,Fridays For Future,32’
 INFO -- : Mandip Singh Soin,mandip@ecotourism.net,motorboat,Frozen Trekker,32’
 INFO -- : Xiuhtezcatl Martinez,martinez@earthguardian.org,campervan,Earth Guardian,28 feet
 INFO -- : Jimmy Buffet,jb@sailor.com,sailboat,Margaritaville,40 ft
- => nil 
+ => nil
+
+outdoorsy_sort :vehicle_type, :asc # resorts file by vehicle_type ascending 
+
+INFO -- : Xiuhtezcatl Martinez,martinez@earthguardian.org,campervan,Earth Guardian,28 feet
+INFO -- : Mandip Singh Soin,mandip@ecotourism.net,motorboat,Frozen Trekker,32’
+INFO -- : Greta Thunberg,greta@future.com,sailboat,Fridays For Future,32’
+INFO -- : Jimmy Buffet,jb@sailor.com,sailboat,Margaritaville,40 ft
 ```
 
 ## Todo
