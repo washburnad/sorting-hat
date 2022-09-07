@@ -1,8 +1,6 @@
-# sorting-hat
+A simple sorting cli for Outdoorsy user files
 
-A simple sorting cli
-
-## usage
+## Usage
 
 Set outdoorsy.rb as an executable and run directly
 
@@ -40,3 +38,15 @@ INFO -- : Xiuhtezcatl Martinez,martinez@earthguardian.org,campervan,Earth Guardi
 INFO -- : Jimmy Buffet,jb@sailor.com,sailboat,Margaritaville,40 ft
  => nil 
 ```
+
+## Todo
+
+- Save output to a file of the user's choosing or to a default file
+- Build a true cli - the current version is just an irb console with the class loaded
+- Build a cl tool for single line operation
+    
+```
+outdoorsy-sort /my/path/commas.txt --sort_column vehicle_name --sort-order desc >> /my/path/sorted.txt
+```
+
+- Add proper validation and error handling, e.g. sorting on an invalid column name
