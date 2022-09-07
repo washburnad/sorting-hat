@@ -56,21 +56,21 @@ module Outdoorsy
         @users.reverse!
       end
 
+      # log users to INFO for now
       log_users
+
+      # return nil rather than the last log line
+      nil
     end
 
     private 
-
-    def csv
-      CSV.new(data_str, col_sep: @delimiter)
-    end
 
     def data_str
       @data_str ||= File.read(@path)
     end
 
     def load_and_build_users
-      csv.each do |row|
+      CSV.new(data_str, col_sep: @delimiter).each do |row|
         @users << User.new(*row)
       end
     end
@@ -79,8 +79,6 @@ module Outdoorsy
       @users.each do |user|
         @logger.info(user.to_s(@delimiter))
       end
-
-      nil
     end
 
     def set_delimiter
