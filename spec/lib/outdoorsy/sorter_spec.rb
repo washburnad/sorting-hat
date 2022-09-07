@@ -123,7 +123,10 @@ RSpec.describe Outdoorsy::Sorter do
         let(:path) { 'spec/fixtures/hyphens.txt' }
 
         it 'raises a malformed CSV error' do 
-          expect { subject }.to raise_error(CSV::MalformedCSVError)
+          expect { subject }.to raise_error(
+            CSV::MalformedCSVError, 
+            'File is not in expected Outdoorsy format in line 1.'
+          )
         end
       end
       
@@ -131,7 +134,10 @@ RSpec.describe Outdoorsy::Sorter do
         let(:path) { 'spec/fixtures/missing_column.txt' }
 
         it 'raises a malformed CSV error' do 
-          expect { subject }.to raise_error(CSV::MalformedCSVError)
+          expect { subject }.to raise_error(
+            CSV::MalformedCSVError, 
+            'File is not in expected Outdoorsy format in line 1.'
+          )
         end
       end
     end

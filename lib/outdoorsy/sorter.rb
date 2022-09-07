@@ -1,12 +1,12 @@
 require 'csv'
 require 'logger'
 
-# use specific class to read an Outdoor.sy user file
+# Use specific class to read an Outdoor.sy user file
 # rows are either | or , delimited
-# rows contain exactly 6 fields corresponding to HEADERS
+# rows contain exactly 6 fields corresponding to HEADERS fields
 # data can be sorted by any row or by full name
 
-# regexes match exactly 6 values separated by delimiter
+# delimiter regexes match exactly 6 values separated by delimiter
 # values can be empty
 
 # e.g. with `,` delimiter
@@ -15,8 +15,6 @@ require 'logger'
 
 module Outdoorsy
   class Sorter
-    attr_reader :users 
-
     COMMA_DELIMITER = ','.freeze
     COMMA_REGEX = /\A.*(,.*){5}$/
     PIPE_DELIMITER = '|'.freeze
@@ -43,11 +41,12 @@ module Outdoorsy
 
     def initialize(path:)
       @path = path 
+      
       @users = []
       @logger = Logger.new(STDOUT)
 
       set_delimiter
-      build_users
+      load_and_build_users
     end
 
     def sort(sort_column: :full_name, sort_order: :asc) 
@@ -57,24 +56,10 @@ module Outdoorsy
         @users.reverse!
       end
 
-      display_users
+      log_users
     end
 
     private 
-
-    def build_users
-      csv.each do |row|
-        @users << User.new(*row)
-      end
-    end
-
-    def display_users
-      @users.each do |user|
-        @logger.info(user.to_s(@delimiter))
-      end
-
-      nil
-    end
 
     def csv
       CSV.new(data_str, col_sep: @delimiter)
@@ -84,13 +69,29 @@ module Outdoorsy
       @data_str ||= File.read(@path)
     end
 
+    def load_and_build_users
+      csv.each do |row|
+        @users << User.new(*row)
+      end
+    end
+
+    def log_users
+      @users.each do |user|
+        @logger.info(user.to_s(@delimiter))
+      end
+
+      nil
+    end
+
     def set_delimiter
       @delimiter = if data_str.match?(COMMA_REGEX)
         COMMA_DELIMITER
       elsif data_str.match?(PIPE_REGEX)
         PIPE_DELIMITER
       else
-        raise(CSV::MalformedCSVError.new('File is not in expected format', 0))
+        raise(
+          CSV::MalformedCSVError.new('File is not in expected Outdoorsy format', 1)
+        )
       end
     end
   end
