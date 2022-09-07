@@ -1,5 +1,5 @@
 class Sorter
-  def initialize(data_rows:, sort_column: 0, sort_order: 'asc')
+  def initialize(data_rows:, sort_column:, sort_order:)
     @data_rows = data_rows
     @sort_column = sort_column
     @sort_order = sort_order

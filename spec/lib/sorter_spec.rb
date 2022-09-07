@@ -9,22 +9,20 @@ RSpec.describe Sorter do
         [ 'm', 1 ]
       ]
 
-      @kargs = {
+      @sorter = described_class.new(
         data_rows: @data_rows,
         sort_column: sort_column,
         sort_order: sort_order
-      }.compact
-
-      @sorter = described_class.new(**@kargs)
+      )
 
       subject
     end
 
-    context 'when all arguments are passed' do 
+    context 'when by column 1 descending' do 
       let(:sort_column) { 1 }
       let(:sort_order) { 'desc' }
 
-      it 'sorts by column 1 descending' do 
+      it 'sorts correctly' do 
         is_expected.to eq(
           [
             [ 'a', 9 ],
@@ -35,11 +33,11 @@ RSpec.describe Sorter do
       end
     end
 
-    context 'when only required arguments are passed' do 
-      let(:sort_column) { nil }
-      let(:sort_order) { nil }
+    context 'when by column 0 ascending' do 
+      let(:sort_column) { 0 }
+      let(:sort_order) { 'asc' }
 
-      it 'sorts by column 0 ascending' do 
+      it 'sorts correctly' do 
         is_expected.to eq(
           [
             [ 'a', 9 ],
