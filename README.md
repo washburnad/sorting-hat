@@ -38,7 +38,7 @@ INFO -- : Naomi Uemura|n.uemura@gmail.com|bicycle|Glacier Glider|5 feet
 INFO -- : Steve Irwin|steve@crocodiles.com|RV|G’Day For Adventure|32 ft
 => nil
 
-outdoorsy_load'spec/fixtures/commas.txt'
+outdoorsy_load 'spec/fixtures/commas.txt'
 => "Loaded spec/fixtures/commas.txt successfully" 
 outdoorsy_sort :last_name, :desc # sorts by last_name descending
 
@@ -48,7 +48,7 @@ INFO -- : Xiuhtezcatl Martinez,martinez@earthguardian.org,campervan,Earth Guardi
 INFO -- : Jimmy Buffet,jb@sailor.com,sailboat,Margaritaville,40 ft
  => nil
 
-outdoorsy_sort :vehicle_type, :asc # resorts file by vehicle_type ascending 
+outdoorsy_sort :vehicle_type, :asc # re-sorts file by vehicle_type ascending 
 
 INFO -- : Xiuhtezcatl Martinez,martinez@earthguardian.org,campervan,Earth Guardian,28 feet
 INFO -- : Mandip Singh Soin,mandip@ecotourism.net,motorboat,Frozen Trekker,32’
